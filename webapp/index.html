@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NGINX — One Entry Point</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="hero">  
+    <nav class="navbar">
+      <div class="logo">
+        <img src="images/nginx_logo.svg" alt="NGINX Reverse Proxy">        
+      </div>
+
+      <a class="badge" href="https://www.f5.com/products/nginx" target="_blank" rel="noopener">Sponsored by F5</a>      
+    </nav>
+  
+    <div class="hero-content">
+      <div class="hero-text">
+      
+        <p class="mini-title">MODERN WEB INFRASTRUCTURE</p>
+
+        <h1>
+          One entry point,<br>
+          Millions of requests.
+        </h1>
+
+        <p class="description">
+         NGINX ("engine x"), the single entry point that receives tons of requests and 
+         decides what happens next: <span class="white">serve, route, cache, secure, compress</span>.
+        </p>
+
+        <div class="flow">
+          <div class="node">CLIENT</div>
+          <div class="pipe"></div>
+          <a class="node button" href="#features">
+            <span>NGINX</span>
+            <span>Explore Features</span>
+          </a>
+          <div class="pipe b"></div>
+          <div class="node">BACKEND</div>
+        </div>
+      
+      </div>
+
+      <div class="hero-card">
+        <div class="card-line" data-target="web-server">
+          <span>HTTP Requests</span>
+          <span class="green">Handled</span>
+        </div>
+        <div class="card-line" data-target="reverse-proxy">
+          <span>Incoming Traffic</span>
+          <span class="green">Forwarded</span>
+        </div>
+        <div class="card-line" data-target="load-balancer">
+          <span>Traffic Distribution</span>
+          <span class="green">Balanced</span>
+        </div>
+        <div class="card-line" data-target="cache-manager">
+          <span>Static Assets</span>
+          <span class="green">Cached</span>
+        </div>
+        <div class="card-line" data-target="protective-shield">
+          <span>Connections</span>
+          <span class="green">Secured</span>
+        </div>
+        <div class="card-line" data-target="traffic-compressor">
+          <span>Responses</span>
+          <span class="green">Compressed</span>
+        </div>
+
+      </div>
+
+    </div>
+    
+  </header>
+
+  <main class="container" id="features">
+
+    <div class="section-title">
+      <p class="mini-title">CORE FEATURES</p>
+      <h2>What NGINX actually does ?</h2>
+    </div>
+
+    <!-- WEB SERVER -->
+    <section class="feature" id="web-server">
+      <button class="accordion">
+        <div class="left">
+          <span class="accordion-number">01</span>
+          <div class="accordion-text">
+            <h3>Web Server</h3>
+            <p>Handles HTTP requests efficiently</p>
+          </div>
+        </div>
+        <span class="icon"></span>
+      </button>
+      <div class="content">
+        <div class="content-inner">
+          <div class="text">
+            <p>
+              NGINX was originally designed as a lightweight and
+              high-performance <b>Web Server</b>.
+            </p>
+            <p>
+              It serves static files extremely fast and handles thousands
+              of simultaneous connections with low memory consumption.
+            </p>
+          </div>
+          <img src="images/Web-server.png" alt="NGINX Web Server">
+        </div>
+      </div>
+    </section>
+
+    <!-- REVERSE PROXY -->
+    <section class="feature" id="reverse-proxy">
+      <button class="accordion">
+        <div class="left">
+          <span class="accordion-number">02</span>
+          <div class="accordion-text">
+            <h3>Reverse Proxy</h3>
+            <p>Stands between clients and backend servers.</p>
+          </div>
+        </div>
+        <span class="icon"></span>
+      </button>
+      <div class="content">
+        <div class="content-inner">
+          <div class="text">
+            <p>
+              As a <b>Reverse Proxy</b>, NGINX can stand between clients and backend servers.
+              It receives incoming traffic and forwards requests to internal services 
+              without exposing infrastructure directly to the public internet.
+            </p>
+          </div>
+          <img src="images/Reverse-Proxy.png" alt="NGINX Reverse Proxy">
+        </div>
+      </div>
+    </section>
+
+    <!-- LOAD BALANCER -->
+    <section class="feature" id="load-balancer">
+      <button class="accordion">
+        <div class="left">
+          <span class="accordion-number">02</span>
+          <div class="accordion-text">
+            <h3>Load Balancer</h3>
+            <p>Distribute requests accross replicated servers</p>
+          </div>
+        </div>
+        <span class="icon"></span>
+      </button>
+      <div class="content">
+        <div class="content-inner">
+          <div class="text">
+            <p>
+              As a <b>Load Balancer</b>, NGINX can distribute traffic between multiple 
+              backend servers to improve performance and ensure high availability.
+            </p>
+            <p>
+              The distribution can follow different logics:
+            </p>
+            <ul>
+              <li><b>Round Robin</b> — cyclic request distribution</li>
+              <li><b>Least Connections</b> — routes to the least busy server</li>
+              <li><b>IP Hash</b> — keeps each client on the same server (sticky sessions)</li>
+            </ul>
+          </div>
+          <img src="images/Load-balancer.png" alt="NGINX Load Balancer">
+        </div>
+      </div>
+    </section>
+
+    <!-- CACHE MANAGER -->
+    <section class="feature" id="cache-manager">
+      <button class="accordion">
+        <div class="left">
+          <span class="accordion-number">04</span>
+          <div class="accordion-text">
+            <h3>Cache Manager</h3>
+            <p>Stores responses for faster delivery</p>
+          </div>
+        </div>
+        <span class="icon"></span>
+      </button>
+      <div class="content">
+        <div class="content-inner">
+          <div class="text">
+            <p>
+              Instead of regenerating the same content repeatedly,
+              NGINX can <b>cache responses</b> and serve them instantly.
+            </p>
+            <p>
+              This reduces backend workload and dramatically <b>improves
+              response time</b> under heavy traffic.
+            </p>
+          </div>
+          <img src="images/Cache-Manager.png" alt="NGINX Cache Manager">
+        </div>
+      </div>
+    </section>
+
+    <!-- PROTECTIVE SHIELD -->
+    <section class="feature" id="protective-shield">
+      <button class="accordion">
+        <div class="left">
+          <span class="accordion-number">05</span>
+          <div class="accordion-text">
+            <h3>Protective Shield</h3>
+            <p>Secures infrastructure and SSL traffic</p>
+          </div>
+        </div>
+        <span class="icon"></span>
+      </button>
+      <div class="content">
+        <div class="content-inner">
+          <div class="text">
+            <p>
+              NGINX acts as a <b>secure gateway</b> between the internet
+              and private infrastructure.
+            </p>
+            <p>
+              It centralizes SSL/TLS encryption, filters malicious traffic
+              and <b>protects backend services</b> from direct exposure.
+            </p>
+          </div>
+          <img src="images/Secure-Entrypoint.png" alt="NGINX Proective Shield">
+        </div>
+      </div>
+    </section>
+
+    <!-- TRAFFIC COMPRESSOR -->
+    <section class="feature" id="traffic-compressor">
+      <button class="accordion">
+        <div class="left">
+          <span class="accordion-number">06</span>
+          <div class="accordion-text">
+            <h3>Traffic Compressor</h3>
+            <p>Optimizes bandwidth usage</p>
+          </div>
+        </div>
+        <span class="icon"></span>
+      </button>
+      <div class="content">
+        <div class="content-inner">
+          <div class="text">
+            <p>
+             NGINX can <b>compress HTTP responses</b> (with gzip or brotli) 
+             before sending them to clients.
+            </p>
+            <p>
+              Smaller payloads mean faster loading times,
+              reduced bandwidth consumption and better scalability.
+            </p>
+          </div>
+          <img src="images/Compressor.png" alt="NGINX Traffic Compressor">
+        </div>
+      </div>
+    </section>
+
+    <section class="end-main">
+      <a class="config-file-button" href="#config-file">
+        <span>Config file</span>
+      </a>
+    </section>
+
+  </main>
+
+
+  <section class="config-file" id="config-file">
+    <div class="section-title">
+      <p class="mini-title">IT ALL LIVES IN ONE CONFIG</p>
+      <p class="sub-title">A single declarative file 
+        - <span class="mono"><b>nginx.conf</b></span> - 
+        to connect every role together.</p>
+    </div>
+
+    <pre class="code">
+      <span class="comment"># Backend servers to which Nginx redirects requests</span>
+      <span class="kw">upstream</span> app {
+        <span class="kw">least_conn</span>;
+        <span class="kw">server</span> 10.0.0.11:8080;
+        <span class="kw">server</span> 10.0.0.12:8080;
+      }
+
+      <span class="kw">server</span> {
+          <span class="kw">listen</span> 443 ssl;   <span class="comment"># Secure Entry Point</span>
+          <span class="kw">ssl_certificate</span> /etc/ssl/site.crt;
+          <span class="kw">gzip</span> on;          <span class="comment"># Traffic Compressor</span>
+
+          <span class="kw">location</span> / {
+              <span class="kw">proxy_cache</span> my_cache;     <span class="comment"># Cache Manager</span>
+              <span class="kw">proxy_pass</span>  http://app;   <span class="comment"># Reverse Proxy + Load Balancer</span>
+          }
+      }
+    </pre>
+
+    <footer>
+      <div class="string">
+        <a class="top-link" href="#top">NGINX</a> — <span class="kw">THE ENTRY POINT</span> FOR MILLIONS OF REQUESTS.
+      </div>
+    </footer>
+
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
