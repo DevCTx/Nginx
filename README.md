@@ -10,6 +10,9 @@ in front of a small containerized **Node.js / Express** web application:
 - **Traffic compressor** — gzip compression of text responses
 - **Secure entrypoint** — TLS / HTTPS termination
 
+> The NGINX site configuration used in front of the containers is documented on my notes 
+> right here [NGINX configuration](https://twn-devops-notes.super.site/nginx-proxy-web-server).
+
 > This repository is used as a **submodule** in **PART2-Fundamentals** of my **DevOps** repository:
 > https://github.com/DevCTx/DevOps
 
@@ -54,9 +57,6 @@ load-balances incoming requests across the three backends.
         ├── script.js
         └── images/
 ```
-
-The NGINX site configuration used in front of the containers is documented on my notes 
-right here [NGINX configuration](https://twn-devops-notes.super.site/nginx-proxy-web-server).
 
 ---
 
