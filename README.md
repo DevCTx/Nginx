@@ -60,7 +60,7 @@ load-balances incoming requests across the three backends.
 ---
 
 ## Preview
-![alt text](image.png)
+![alt text](preview.png)
 
 ---
 

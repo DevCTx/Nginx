@@ -1,0 +1,79 @@
+name: Test NGINX setup
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:        # lets you run it manually from the Actions tab
+
+jobs:
+  nginx-roles:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --- Bring up the 3 identical web app containers (one image, 3 instances) ---
+      - name: Build & start the web app containers
+        working-directory: webapp
+        run: docker compose up -d --build
+
+      - name: Wait for the backends to be ready
+        run: |
+          for port in 3001 3002 3003; do
+            for i in $(seq 1 30); do
+              if curl -sf "http://localhost:$port/" >/dev/null; then
+                echo "webapp on :$port is up"; break
+              fi
+              sleep 2
+            done
+          done
+
+      # --- Install NGINX on the runner and load our versioned config ---
+      - name: Install & configure NGINX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nginx
+          sudo mkdir -p /var/cache/nginx/webapp
+          sudo cp nginx/webapp.conf /etc/nginx/sites-available/webapp
+          sudo ln -sf /etc/nginx/sites-available/webapp /etc/nginx/sites-enabled/webapp
+          sudo rm -f /etc/nginx/sites-enabled/default
+          sudo nginx -t
+          sudo systemctl restart nginx
+
+      # --- Role checks ---
+      - name: "Role check · web server + reverse proxy (HTTP 200)"
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/)
+          echo "HTTP status through NGINX: $code"
+          [ "$code" = "200" ]
+
+      - name: "Role check · gzip compression"
+        run: |
+          curl -s -I -H 'Accept-Encoding: gzip' http://localhost:8080/style.css | tee headers.txt
+          grep -iq 'content-encoding: gzip' headers.txt
+
+      - name: "Role check · cache (HIT on second request)"
+        run: |
+          first=$(curl -s -D - -o /dev/null http://localhost:8080/ | grep -i x-cache-status)
+          second=$(curl -s -D - -o /dev/null http://localhost:8080/ | grep -i x-cache-status)
+          echo "1st request: $first"
+          echo "2nd request: $second"
+          echo "$second" | grep -iq HIT
+
+      - name: "Role check · load balancing (>= 2 backends reached)"
+        run: |
+          for i in $(seq 1 20); do curl -s -o /dev/null http://localhost:8080/lb-test; done
+          backends=$(sudo grep '/lb-test' /var/log/nginx/webapp.log \
+                     | grep -oE '127\.0\.0\.1:300[123]' | sort -u)
+          echo "Backends reached:"; echo "$backends"
+          [ "$(echo "$backends" | grep -c .)" -ge 2 ]
+
+      # --- Always show the log and clean up, even if a check failed ---
+      - name: NGINX access log (debug)
+        if: always()
+        run: sudo cat /var/log/nginx/webapp.log || true
+
+      - name: Tear down containers
+        if: always()
+        working-directory: webapp
+        run: docker compose down
