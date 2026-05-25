@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:24
 WORKDIR /app
 
 # Dependencies first to put all this in cache
