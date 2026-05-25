@@ -41,9 +41,8 @@ jobs:
             -out /etc/nginx/certs/selfsigned.crt \
             -subj "/CN=localhost"
 
-          # Load the version-controlled config
-          # (adjust the source path if your folder is not named "config")
-          sudo cp config/webapp.conf /etc/nginx/sites-available/webapp
+          # Load the version-controlled config from nginx/webapp.conf
+          sudo cp nginx/webapp.conf /etc/nginx/sites-available/webapp
           sudo ln -sf /etc/nginx/sites-available/webapp /etc/nginx/sites-enabled/webapp
           sudo rm -f /etc/nginx/sites-enabled/default
           sudo nginx -t
