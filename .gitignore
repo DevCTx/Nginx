@@ -1,0 +1,218 @@
+# ============================================================
+# 🔐 SECURITY FIRST — CREDENTIALS & SECRETS
+# ============================================================
+
+# ===== AWS =====
+.aws/
+.aws-sam/
+aws-exports.js
+amplify/team-provider-info.json
+**/*.pem
+*.pem
+**/*.key
+*.key
+*.csr
+*.crt
+*.cer
+*.der
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.pkcs12
+credentials
+aws_credentials
+*_credentials
+
+# ===== Generic secrets =====
+secrets/
+secret/
+private/
+vault/
+*.secret
+*.secrets
+*secret*
+*password*
+*passwd*
+*credential*
+*credentials*
+*token*
+*apikey*
+*api_key*
+*auth*
+**/.env
+.env
+.env.*
+!.env.example
+!.env.template
+
+# ===== SSH =====
+.ssh/
+*_rsa*
+*_dsa*
+*_ecdsa*
+*_ed25519*
+*.ppk
+known_hosts*
+
+# ===== GCP / Firebase =====
+*-service-account.json
+service-account*.json
+firebase-adminsdk*.json
+gcloud/
+.gcloud/
+
+# ===== Azure =====
+.azure/
+azureauth.json
+
+# ===== Kubernetes =====
+kubeconfig
+*.kubeconfig
+kube-config.yml
+.kube/
+
+# ============================================================
+# 🧱 TERRAFORM / IaC
+# ============================================================
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+override.tf
+override.tf.json
+*_override.tf
+terraform.tfvars
+crash.log
+
+# ===== Ansible =====
+vault.yml
+vault.yaml
+*.vault
+group_vars/*/vault*
+host_vars/*/vault*
+
+# ============================================================
+# 🐳 DOCKER
+# ============================================================
+.docker/
+.dockerignore
+docker-compose.override.yml
+Dockerfile.override
+.docker/config.json
+
+# ============================================================
+# ⚙️ CI/CD
+# ============================================================
+.jenkins/
+.github/workflows/*.secrets.yml
+
+# ============================================================
+# 📦 NODE / JAVASCRIPT
+# ============================================================
+node_modules/
+dist/
+build/
+coverage/
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ============================================================
+# 🐍 PYTHON
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+venv/
+env/
+.venv/
+pip-wheel-metadata/
+*.so
+
+# ============================================================
+# ☕ JAVA / JVM
+# ============================================================
+*.class
+*.jar
+*.war
+*.ear
+target/
+build/
+.gradle/
+.gradle-cache/
+.mvn/
+mvnw
+mvnw.cmd
+gradle.properties
+!gradle/wrapper/gradle-wrapper.jar
+hs_err_pid*
+
+# ============================================================
+# 🧠 IDE / EDITORS
+# ============================================================
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Others
+*.sublime-*
+
+# ============================================================
+# 🗄 DATABASES / DUMPS
+# ============================================================
+*.sqlite
+*.sqlite3
+*.db
+*.sql.gz
+*.dump
+pgpass
+.pgpass
+.my.cnf
+
+# ============================================================
+# 🖥 OS FILES
+# ============================================================
+.DS_Store
+Thumbs.db
+.Trash-*
+.fuse_hidden*
+*~
+
+# ============================================================
+# 📜 LOGS & TEMP
+# ============================================================
+logs/
+*.log
+*.bak
+*.tmp
+*.swp
+
+# ============================================================
+# 🧾 PERSONAL FILES
+# ============================================================
+invoice/
+notes/
+private_docs/
+
+# ============================================================
+# 🧪 SECURITY TOOLS
+# ============================================================
+.secrets.baseline
+detect-secrets-report.json

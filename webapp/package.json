@@ -1,0 +1,14 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "A node application to present Nginx",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "DevCTx",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

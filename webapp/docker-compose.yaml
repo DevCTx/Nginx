@@ -1,0 +1,30 @@
+services:
+  webapp1:
+    build: .
+    image: webapp:latest
+    container_name: webapp1
+    environment:
+      - APP_NAME=webapp1
+      - HOST_PORT=3001
+    ports:
+      - "3001:3000"
+
+  webapp2:
+    build: .
+    image: webapp:latest
+    container_name: webapp2
+    environment:
+      - APP_NAME=webapp2
+      - HOST_PORT=3002
+    ports:
+      - "3002:3000"
+
+  webapp3:
+    build: .
+    image: webapp:latest
+    container_name: webapp3
+    environment:
+      - APP_NAME=webapp3
+      - HOST_PORT=3003
+    ports:
+      - "3003:3000"

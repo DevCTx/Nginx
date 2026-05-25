@@ -292,7 +292,8 @@
 
       <span class="kw">server</span> {
           <span class="kw">listen</span> 443 ssl;   <span class="comment"># Secure Entry Point</span>
-          <span class="kw">ssl_certificate</span> /etc/ssl/site.crt;
+          <span class="kw">ssl_certificate</span>       /etc/ssl/site_public_key.crt;
+          <span class="kw">ssl_certificate_key</span>   /etc/ssl/site_private_key.key;
           <span class="kw">gzip</span> on;          <span class="comment"># Traffic Compressor</span>
 
           <span class="kw">location</span> / {
