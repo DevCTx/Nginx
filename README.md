@@ -1,20 +1,19 @@
 # Discovering how to configure NGINX
 
-A hands-on project exploring the main roles **NGINX** can play — all at once —
-in front of a small containerized **Node.js / Express** web application:
+A project exploring the main roles that **NGINX** can play:
 
 - **Web server** — serves static files
 - **Reverse proxy** — hides the backends behind a single entry point
 - **Load balancer** — spreads traffic across several identical instances
 - **Cache manager** — stores backend responses to avoid hitting them every time
 - **Traffic compressor** — gzip compression of text responses
-- **Secure entrypoint** — TLS / HTTPS termination
+- **Secure entrypoint** — HTTPS termination
 
-> The NGINX site configuration used in front of the containers is documented on my notes 
-> right here [NGINX configuration](https://twn-devops-notes.super.site/nginx-proxy-web-server).
+---
 
-> This repository is used as a **submodule** in **PART2-Fundamentals** of my **DevOps** repository:
-> https://github.com/DevCTx/DevOps
+## Full explainations on my notes here:
+
+[NGINX configuration](https://twn-devops-notes.super.site/nginx-proxy-web-server)
 
 ---
 
@@ -57,6 +56,11 @@ load-balances incoming requests across the three backends.
         ├── script.js
         └── images/
 ```
+
+---
+
+## Preview
+![alt text](image.png)
 
 ---
 
@@ -112,6 +116,13 @@ http://localhost:8080 (or https://localhost once TLS is configured).
 ```bash
 git clone git@github.com:DevCTx/Nginx.git
 ```
+
+---
+
+## Submodule of DevOps Repository
+
+> This repository is used as a **submodule** in **PART2-Fundamentals** of my **DevOps** repository:
+> https://github.com/DevCTx/DevOps
 
 When cloning the parent **DevOps** repository, include this submodule with:
 
