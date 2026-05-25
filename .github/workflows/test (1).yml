@@ -1,0 +1,97 @@
+name: Test NGINX setup
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:          # lets you run it manually from the Actions tab
+
+jobs:
+  nginx-roles:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5      # v5 runs on Node.js 24 (no deprecation warning)
+
+      # --- Bring up the 3 identical web app containers (one image, 3 instances) ---
+      - name: Build & start the web app containers
+        working-directory: webapp
+        run: docker compose up -d --build
+
+      - name: Wait for the backends to be ready
+        run: |
+          for port in 3001 3002 3003; do
+            for i in $(seq 1 30); do
+              if curl -sf "http://localhost:$port/" >/dev/null; then
+                echo "webapp on :$port is up"; break
+              fi
+              sleep 2
+            done
+          done
+
+      # --- Install NGINX, generate the self-signed cert, load the versioned config ---
+      - name: Install & configure NGINX (with self-signed TLS)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nginx
+          sudo mkdir -p /var/cache/nginx/webapp /etc/nginx/certs
+
+          # Self-signed certificate the config expects at /etc/nginx/certs/
+          sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+            -keyout /etc/nginx/certs/selfsigned.key \
+            -out /etc/nginx/certs/selfsigned.crt \
+            -subj "/CN=localhost"
+
+          # Load the version-controlled config
+          # (adjust the source path if your folder is not named "config")
+          sudo cp config/webapp.conf /etc/nginx/sites-available/webapp
+          sudo ln -sf /etc/nginx/sites-available/webapp /etc/nginx/sites-enabled/webapp
+          sudo rm -f /etc/nginx/sites-enabled/default
+          sudo nginx -t
+          sudo systemctl restart nginx
+
+      # --- Role checks (HTTPS uses -k to accept the self-signed certificate) ---
+      - name: "Role check - secure entrypoint (HTTP 8080 -> HTTPS, 301)"
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/)
+          echo "Port 8080 returns: $code"
+          [ "$code" = "301" ]
+
+      - name: "Role check - web server + reverse proxy over HTTPS (200)"
+        run: |
+          code=$(curl -k -s -o /dev/null -w '%{http_code}' https://localhost/)
+          echo "HTTPS status through NGINX: $code"
+          [ "$code" = "200" ]
+
+      - name: "Role check - gzip compression"
+        run: |
+          curl -k -s -I -H 'Accept-Encoding: gzip' https://localhost/ | tee headers.txt
+          grep -iq 'content-encoding: gzip' headers.txt
+
+      - name: "Role check - cache (HIT on second request)"
+        run: |
+          first=$(curl -k -s -D - -o /dev/null https://localhost/ | grep -i x-cache-status)
+          second=$(curl -k -s -D - -o /dev/null https://localhost/ | grep -i x-cache-status)
+          echo "1st request: $first"
+          echo "2nd request: $second"
+          echo "$second" | grep -iq HIT
+
+      - name: "Role check - load balancing (>= 2 backends reached)"
+        run: |
+          # 'Cache-Control: no-cache' triggers proxy_cache_bypass, so each
+          # request reaches a backend instead of being served from cache.
+          for i in $(seq 1 20); do
+            curl -k -s -H 'Cache-Control: no-cache' -o /dev/null https://localhost/
+          done
+          backends=$(sudo grep -oE '127\.0\.0\.1:300[123]' /var/log/nginx/webapp.log | sort -u)
+          echo "Backends reached:"; echo "$backends"
+          [ "$(echo "$backends" | grep -c .)" -ge 2 ]
+
+      # --- Always show the log and clean up, even if a check failed ---
+      - name: NGINX access log (debug)
+        if: always()
+        run: sudo cat /var/log/nginx/webapp.log || true
+
+      - name: Tear down containers
+        if: always()
+        working-directory: webapp
+        run: docker compose down
