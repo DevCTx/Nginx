@@ -73,7 +73,7 @@ load-balances incoming requests across the three backends.
 
 ## Getting started
 
-## 1. Clone this repository alone
+## 1. Clone this repository
 
 ```bash
 git clone git@github.com:DevCTx/Nginx.git
@@ -113,6 +113,14 @@ sudo systemctl reload nginx
 
 ### 4. Open the app through NGINX
 http://localhost:8080 (or https://localhost once TLS is configured).
+
+
+### 5. When you are done
+
+```bash
+docker compose down
+```
+and delete folder
 
 ---
 
