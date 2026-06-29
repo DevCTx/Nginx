@@ -73,7 +73,13 @@ load-balances incoming requests across the three backends.
 
 ## Getting started
 
-### 1. Build and run the three web app instances
+## 1. Clone this repository alone
+
+```bash
+git clone git@github.com:DevCTx/Nginx.git
+```
+
+### 2. Build and run the three web app instances
 
 ```bash
 cd webapp
@@ -92,7 +98,7 @@ published on a distinct host port:
 
 You can verify each instance directly: http://localhost:3001, `:3002`, `:3003`.
 
-### 2. Configure NGINX
+### 3. Configure NGINX
 
 Copy the site configuration into `/etc/nginx/sites-available/webapp`, enable it,
 and disable the default site to free port 80/8080:
@@ -105,17 +111,8 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-### 3. Open the app through NGINX
+### 4. Open the app through NGINX
 http://localhost:8080 (or https://localhost once TLS is configured).
-
-
----
-
-## Clone this repository alone
-
-```bash
-git clone git@github.com:DevCTx/Nginx.git
-```
 
 ---
 
@@ -123,9 +120,3 @@ git clone git@github.com:DevCTx/Nginx.git
 
 > This repository is used as a **submodule** in **PART2-Fundamentals** of my **DevOps** repository:
 > https://github.com/DevCTx/DevOps
-
-When cloning the parent **DevOps** repository, include this submodule with:
-
-```bash
-git clone --recurse-submodules git@github.com:DevCTx/DevOps.git
-```
