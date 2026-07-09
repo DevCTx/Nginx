@@ -20,8 +20,13 @@ A project exploring the main roles that **NGINX** can play:
 ## Architecture
 
 A single NGINX instance sits in front of **three identical containers** running the
-same Express app. NGINX terminates TLS, compresses responses, caches them, and
-load-balances incoming requests across the three backends.
+same **Express app** that shows a **web page** presenting the main **features of Nginx**.
+
+NGINX :
+- terminates TLS,
+- compresses responses,
+- caches them,
+- and load-balances incoming requests across the three backends.
 
 ```
                           ┌──────────────────────────────┐
