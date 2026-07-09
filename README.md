@@ -129,6 +129,29 @@ and delete folder
 
 ---
 
+### Workflow
+
+A workflow (`test.yaml`) has been integrated for automated integration tests (CI): with each push/PR on this Nginx repo, GitHub Actions mounts the entire stack and verifies that the Nginx config plays its 5 roles. If a role is interrupted, the workflow fails and warns.
+
+#### What it does, step by step ?
+- **Triggers** (on:) — runs on push, pull request, or manually (workflow_dispatch).
+- **Checkout** — retrieve the code.
+- **Starts 3 containers of the same web app** (3 instances, ports 3001/3002/3003) via **docker compose**.
+- **Waits** for the 3 backends to respond (curl loop with retries).
+- **Installs and configures Nginx** — generates a self-signed TLS certificate, loads your versioned nginx/webapp.conf, tests (nginx -t) and reboots.
+- prints the Nginx log and destroys containers even if a test failed (guaranteed cleanup). [`if: always()`]
+
+##### The 5 roles checked (the heart of the file)
+|Test|What it validates|
+|---|---|
+|Port 8080 → 301|HTTP redirection to HTTPS (secure input)|
+|HTTPS → 200|Reverse proxy + functional web server|
+|content-encoding: gzip|Compression enabled|
+|X-Cache-Status: HIT on 2nd call| Cache works|
+|≥ 2 backends reached|Distributed load balancing|
+
+---
+
 ## Submodule of DevOps Repository
 
 > This repository is used as a **submodule** in **PART2-Fundamentals** of my **DevOps** repository:
